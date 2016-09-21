@@ -44,7 +44,7 @@ class Welcome extends CI_Controller {
 
 
 
-print_r($data);
+     print_r($data);
 	}
 
 
@@ -57,38 +57,6 @@ print_r($data);
 	}
 
 
-	/通过curl方式获取远程的图片到本地
-    public function get_remote_file($url = "", $filename = "") {
-        if(is_dir(basename($filename))) {
-            echo "The Dir was not exits";
-            return false;
-        }
-        //去除URL连接上面可能的引号
-        $url = preg_replace( '/(?:^[\'"]+|[\'"\/]+$)/', '', $url );
-        $hander = curl_init();
-        $fp = fopen($filename,'wb');
-        curl_setopt($hander,CURLOPT_URL,$url);
-        curl_setopt($hander,CURLOPT_FILE,$fp);
-        curl_setopt($hander,CURLOPT_HEADER,0);
-        curl_setopt($hander,CURLOPT_FOLLOWLOCATION,1);        
-        curl_setopt($hander,CURLOPT_TIMEOUT,60);
-        curl_exec($hander);
-        curl_close($hander);
-        fclose($fp);
-        Return true;
-    }
-
-    $src=$gocn_host.'/uploads/data/'.$src;
-    $f_is_exists=check_remote_file_exists($src);
-    if($f_is_exists){          
-        $ext=strtolower(substr($src,strrpos($src,'.')+1));
-        if($ext){                  
-            $y=date('Y',time()); $m=date('m',time());
-            $dir="./usr/attach/cosside/{$y}/{$m}";                
-            if(!is_dir($dir)) mkdir($dir,0777,true);              
-            $filename='gs_'.md5(date('his',time()).rand(0,99)).'.'.$ext;
-            get_remote_file($src,$dir.'/'.$filename);
-        }
 
 
 
